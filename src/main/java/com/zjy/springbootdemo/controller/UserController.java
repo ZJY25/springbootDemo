@@ -44,11 +44,13 @@ public class UserController {
     //接口路径/user/page
     //@RequestParam 接受  ？pageNum=1&pageSize=10
     @GetMapping("/page")
-    public Map<String, Object> findPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
+    public Map<String, Object> findPage(@RequestParam Integer pageNum,
+                                        @RequestParam Integer pageSize,
+                                        @RequestParam String username){
         //LIMIT第一个参数 = (pageNum - 1) * pageSize
         pageNum = (pageNum - 1) * pageSize;
-        List<User> data = userMapper.selectPage(pageNum, pageSize);
-        Integer total = userMapper.selectTotal();
+        List<User> data = userMapper.selectPage(pageNum, pageSize,username);
+        Integer total = userMapper.selectTotal(username);
         Map<String, Object> res = new HashMap<>();
         res.put("data", data);
         res.put("total", total);
